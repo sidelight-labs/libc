@@ -1,0 +1,29 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/go:1.17.3
+        environment:
+          DB_USER: root
+          DB_PASSWORD: password
+          DB_PORT: 3306
+          DB_HOST: 127.0.0.1
+          COSMOS_HUB1_API: http://34.132.131.174:1317
+          COSMOS_HUB2_API: http://35.184.80.133:1317
+          COSMOS_HUB3_API: http://35.193.236.184:1317
+          COSMOS_HUB4_API: http://34.133.213.231:1317
+    steps:
+      - checkout
+      - run:
+          name: Unit tests
+          command: ./scripts/unit.sh
+      - run:
+          name: Integration tests
+          command: ./scripts/integration.sh
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test

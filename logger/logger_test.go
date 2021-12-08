@@ -9,11 +9,15 @@ import (
 	"testing"
 )
 
-func TestLogger(t *testing.T) {
+func TestUnitLogger(t *testing.T) {
 	spec.Run(t, "Logger", testLogger, spec.Report(report.Terminal{}))
 }
 
 func testLogger(t *testing.T, when spec.G, it spec.S) {
+	it.Before(func() {
+		RegisterTestingT(t)
+	})
+
 	when("Wrap()", func() {
 		const (
 			errorMsg = "the error that occurred"
@@ -22,7 +26,7 @@ func testLogger(t *testing.T, when spec.G, it spec.S) {
 
 		it("wraps error messages", func() {
 			err := logger.Wrap(errors.New(errorMsg), addition)
-			Expect(err.Error()).To(MatchRegexp("github.com/sidelight-labs/libc/utils_test.testUtils.func\\d+.\\d+\\[\\d+\\]: the additional message: the error that occurred"))
+			Expect(err.Error()).To(MatchRegexp("github.com/sidelight-labs/libc/logger_test.testLogger.func\\d+.\\d+\\[\\d+\\]: the additional message: the error that occurred"))
 		})
 	})
 }
