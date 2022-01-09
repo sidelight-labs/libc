@@ -10,6 +10,10 @@ func Shorten(input string, size int) string {
 }
 
 func StringToArray(input string) []string {
+	if input == "" {
+		return []string{}
+	}
+
 	result := []string{input}
 
 	if strings.Contains(input, ",") {
