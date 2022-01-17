@@ -14,13 +14,7 @@ func StringToArray(input string) []string {
 		return []string{}
 	}
 
-	result := []string{input}
-
-	if strings.Contains(input, ",") {
-		return strings.Split(input, ",")
-	}
-
-	return result
+	return strings.Split(input, ",")
 }
 
 func StringToInterface(args []string) []interface{} {

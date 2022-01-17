@@ -9,7 +9,7 @@ import (
 )
 
 func TestUnitStrings(t *testing.T) {
-	spec.Run(t, "Time", testStrings, spec.Report(report.Terminal{}))
+	spec.Run(t, "Strings", testStrings, spec.Report(report.Terminal{}))
 }
 
 func testStrings(t *testing.T, when spec.G, it spec.S) {
@@ -34,6 +34,11 @@ func testStrings(t *testing.T, when spec.G, it spec.S) {
 	})
 
 	when("StringToArray()", func() {
+		it("returns an empty array with an empty string as input", func() {
+			result := strings.StringToArray("")
+			Expect(result).Should(BeEmpty())
+		})
+
 		it("splits the string as expected", func() {
 			result := strings.StringToArray("a,b,c,d")
 			Expect(result).Should(HaveLen(4))
