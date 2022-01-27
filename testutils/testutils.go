@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"testing"
 )
 
 type MockUuidGenerator struct {
@@ -23,29 +24,26 @@ func (gen *MockUuidGenerator) GenerateMockUUID() string {
 	return uuid
 }
 
-func FileToString(fileName string) (string, error) {
-	_, thisFile, _, _ := runtime.Caller(0)
+func Testdata(t *testing.T, fileName string) string {
+	t.Helper()
 
 	var (
 		urlPath string
 		err     error
+
+		_, thisFile, _, _ = runtime.Caller(0)
 	)
+
 	if strings.Contains(thisFile, "vendor") {
 		urlPath, err = filepath.Abs(path.Join(thisFile, "../../../../../..", "resources", "testdata", fileName))
 	} else {
 		urlPath, err = filepath.Abs(path.Join(thisFile, "../..", "resources", "testdata", fileName))
 	}
 
-	if err != nil {
-		return "", err
-	}
-
+	Expect(err).NotTo(HaveOccurred())
 	Expect(urlPath).To(BeAnExistingFile())
 
 	buf, err := ioutil.ReadFile(urlPath)
-	if err != nil {
-		return "", err
-	}
-
-	return string(buf), nil
+	Expect(err).NotTo(HaveOccurred())
+	return string(buf)
 }
