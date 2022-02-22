@@ -17,6 +17,17 @@ func testStrings(t *testing.T, when spec.G, it spec.S) {
 		RegisterTestingT(t)
 	})
 
+	when("AminoToHash()", func() {
+		it("converts the value as expected", func() {
+			input := "ygEoKBapCkSoo2GaChQxrczb/flZmTC8mDh3uKwKyZCnpRIUmg1pOMtG/ArMH0h5or9X8Ib0Nh8aEgoFdWF0b20SCTMwMjM3NTAwMBISCgwKBXVhdG9tEgM3NTAQwJoMGmoKJuta6YchAyB84hKBjN2wsmdC2eF1Ppz6l3VxlfSKJpYsTaL4VrrEEkB/gVnCRtn1QAD29qSKfqN0ggGnsI2B+iJvH27ZV+FdiTw54z3KVWGsBAlBWjXbq+gc1rEVoVP8y5S8xo/jY836"
+			encrypted := "043d4ea697150e9acfbd2ba679ce9c6ff484a1767758287dfca8abacedfe5a62"
+
+			output, err := strings.AminoToHash(input)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(output).To(Equal(encrypted))
+		})
+	})
+
 	when("Shorten()", func() {
 		inputString := "0123456789"
 

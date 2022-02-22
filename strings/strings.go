@@ -1,6 +1,23 @@
 package strings
 
-import "strings"
+import (
+	"crypto/sha256"
+	"encoding/base64"
+	"fmt"
+	"strings"
+)
+
+func AminoToHash(input string) (string, error) {
+	bytes, err := base64.StdEncoding.DecodeString(input)
+	if err != nil {
+		return "", err
+	}
+
+	sum := sha256.New()
+	sum.Write(bytes)
+
+	return fmt.Sprintf("%x", sum.Sum(nil)), nil
+}
 
 func Shorten(input string, size int) string {
 	if len(input) > size {
