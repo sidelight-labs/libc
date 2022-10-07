@@ -3,7 +3,7 @@ module github.com/sidelight-labs/libc
 go 1.17
 
 require (
-	github.com/onsi/gomega v1.20.2
+	github.com/onsi/gomega v1.21.1
 	github.com/pkg/errors v0.9.1
 	github.com/sclevine/spec v1.4.0
 )
